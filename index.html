@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="author" content="">
+	<!-- mobile settings -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>form</title>
+	<link rel="icon" href="assets/images/favicon.ico">
+
+	<!--Web font css-->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,500,700,900" rel="stylesheet" type="text/css">
+	<!--<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">-->
+
+	<!--Bootstrap CSS-->
+	<link href="assets/css/bootstrap.css" rel="stylesheet">
+
+	<!--Custom CSS-->
+	<link href="assets/css/master.css" rel="stylesheet">
+
+	<!--Icon font css-->
+	<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">--> 
+	<link href="assets/css/font-awesome.css" rel="stylesheet">
+
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	  <script src="assets/js/html5shiv.min.js"></script>
+	  <script src="assets/js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+<body>
+		<div class="container">
+            <section class="form-section">
+                <form name="myform">
+                    <div class="form-block clearfix">
+						<div class="form-group">
+                            <label>Input Text</label>
+                            <div class="field-outer">
+                                <textarea id="textarea" type="text" name="rev" class="form-control" rows="3" placeholder="Enter your text here"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label></label>
+                            <div class="field-outer">
+                                <input type="submit" class="btn" "value="Submit">
+                            </div>
+						</div>
+							<div class="form-group">
+						   <label>Reverse</label>
+						   <div class="field-outer">
+						   <input class="btn"type="button" value="Reverse" onClick="reverse(this.form)">
+						   </div>
+						</div> 
+						<div class="form-group">
+						   <label>Remove duplicate</label>
+						   <div class="field-outer">
+						   <input class="btn"type="button" value="Remove" onClick="duplicate(this.form)">
+						   </div>
+						</div>
+						<div class="form-group">
+						  <label>Remove Special Characters</label>
+						   <div class="field-outer">
+						   <input class="btn"type="button" value="Remove" onClick="replacespecial(this.form)">
+						   </div>
+						</div>
+					    <div class="form-group">
+						   <label>Replace aress</label>
+						   <div class="field-outer">
+						   <input class="btn"type="button" value="Replace" onClick="replace(this.form)">
+						   </div>
+					     </div>
+						 <div class="form-group">
+						   <label>Hyperlink</label>
+						   <div class="field-outer">
+						   <input class="btn" type="button" value="Convert" onclick="convert();">
+						   </div>
+						</div>
+					    <div class="form-group">
+						   <label>Hyperlink Output</label>
+						   <div class="field-outer">
+						   <p id="converted_url"></p>
+						   </div>
+						</div>  
+					</div>
+                </form>
+            </section> 
+        </div>
+    </body>
+<script type ="text/Javascript">
+ function reverse(form) 
+  {
+   var text = "";
+   var str = form.rev.value;
+   for (i = 0; i <= str.length; i++)
+   text = str.substring(i, i+1) + text;
+   form.rev.value = text;
+  }
+  <!-- remove all duplicate words -->
+        function duplicate(form) {
+    var str = form.rev.value;
+    var s = str.split(" ");
+    var result = [];
+    for(var i =0; i < s.length ; i++)
+    {
+     if(result.indexOf(s[i]) === -1)
+     {
+    result.push(s[i]);
+     } 
+    }
+   var re = result.join(" ");
+    form.rev.value = re;
+  }
+  <!-- remove special characters like (#,%,@,$)  -->
+  function replacespecial(form) 
+  {
+   var re=/[^a-z0-9\s]/gi;
+   var str = form.rev.value;
+   res = str.replace(re," ");
+   form.rev.value = res;
+  }
+  <!-- replace "aress" with "aressIndia"  -->
+  function replace(form) 
+  {
+   var re=/aress/gi;
+   var str = form.rev.value;
+   res = str.replace(re,"aressindia");
+   form.rev.value = res;
+  }
+  <!-- create a hyperlink for any word that start with http:// -->
+  function convert()
+  {
+    var text=document.getElementById("textarea").value;
+    var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+    var text1=text.replace(exp, "<a href='$1'>$1</a>");
+    var exp2 =/(^|[^\/])(www\.[\S]+(\b|$))/gim;
+    document.getElementById("converted_url").innerHTML=text1.replace(exp2, '$1<a target="_blank" href="http://$2">$2</a>');
+  }
+
+</script>
+</html>
